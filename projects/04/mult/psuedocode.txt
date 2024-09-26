@@ -1,0 +1,11 @@
+// Program: Multiplication
+// Usage : Multiply RAM[0] and RAM[1] and stores the result at RAM[2]
+    sum   = 0
+    count = R1
+LOOP:
+    if (count == 0) goto STOP
+    sum = sum + R0
+    b = b - 1
+    goto LOOP
+STOP:
+    R2 = sum

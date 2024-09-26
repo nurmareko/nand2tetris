@@ -1,0 +1,156 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname BasicParser) (read-case-sensitive #t) (teachpacks ((lib "batch-io.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "batch-io.rkt" "teachpack" "2htdp")) #f)))
+(define-struct A [address])
+(define-struct C [destination compute jump])
+
+; Instruction is one of:
+; - A-instruction
+; - C-instruction
+
+; A-instruction is a structure (make-A Number)
+
+; C-instruction is a structure (make-C Dest Comp Jump)
+
+; Dest is a member? of this list:
+;(define DEST
+;  '("" "M" "D" "DM" "A" "AM" "ADM"))
+
+; Comp is a member? of this list:
+;(define COMP
+;  '("0"   "1"   "-1"  "D"   "A"   "M"   "!D"  "!A"
+;    "!M"  "-D"  "-A"  "-M"  "D+1" "A+1" "M+1" "D- 1"
+;    "A-1" "M-1" "D+A" "D+M" "D-A" "D-M" "A-D" "M-D"
+;    "D&A" "D&M" "D|A" "D|M"))
+
+; Jump is a member? of this list:
+;(define JUMP
+;  '("" "JGT" "JEQ" "JGE" "JLE" "JLT" "JNE" "JMP"))
+;====================================================;
+(define given
+  (list "// this is a comment."
+        ""
+        "// A-instruction examples."
+        "@0"
+        "@15"
+        "@650"
+        ""
+        "// C-instruction examples."
+        "D=0"
+        "M=M+D"
+        "0;JMP"
+        "D;JGT"
+        ""
+        "D+1"
+        "0"
+        "-1"))
+(define expected
+  (list (make-A 0)
+        (make-A 15)
+        (make-A 650)
+        (make-C "D" "0" "")
+        (make-C "M" "M+D" "")
+        (make-C "" "0" "JMP")
+        (make-C "" "D" "JGT")
+        (make-C "" "D+1" "")
+        (make-C "" "0" "")
+        (make-C "" "-1" "")))
+;====================================================;
+; [List-of String] -> [List-of String]
+; remove comment and whitespace.
+(check-expect
+ (remove-comment/white given)
+ (list "@0" "@15" "@650" "D=0" "M=M+D" "0;JMP"
+       "D;JGT" "D+1" "0" "-1"))
+(define (remove-comment/white ls)
+  (local (; String -> Boolean
+          (define (instruction? s)
+            (not (or (string=? "" s)
+                     (string=? "/" (substring s 0 1))))))
+    (filter instruction? ls)))
+; String -> Instruction
+; parse string into instruction
+(check-expect (str->inst "@15") (make-A 15))
+(check-expect (str->inst "0") (make-C "" "0" ""))
+(check-expect (str->inst "0;JMP") (make-C "" "0" "JMP"))
+(check-expect (str->inst "D=0") (make-C "D" "0" ""))
+(define (str->inst s)
+  (if (string=? "@" (substring s 0 1))
+      (parse-a s)
+      (parse-c s)))
+; String -> A-instruction
+; parse representation of A-instruction.
+(define (parse-a s)
+  (make-A (string->number (substring s 1))))
+; String -> C-instruction
+; parse representation of C-instruction.
+(define (parse-c s)
+  (make-C (get-dest s) (get-comp s) (get-jump s)))
+; String -> Dest
+; get the destination field from a string reprent a
+; C-instruction.
+(check-expect (get-dest "0") "")
+(check-expect (get-dest "0;JMP") "")
+(check-expect (get-dest "D=0") "D")
+(check-expect (get-dest "AM=0") "AM")
+(check-expect (get-dest "ADM=0") "ADM")
+(define (get-dest s)
+  (local ((define exploded (explode s))
+          ; [List-of 1String] -> [List-of 1String]
+          (define (dest l1s)
+            (cond
+              [(equal? "=" (first l1s)) '()]
+              [else
+               (cons (first l1s)
+                     (dest (rest l1s)))])))
+    (if (member? "=" exploded)
+        (implode (dest exploded)) "")))
+; String -> Comp
+; get the compute field from a string reprent a
+; C-instruction.
+(check-expect (get-comp "0") "0")
+(check-expect (get-comp "0;JMP") "0")
+(check-expect (get-comp "D=0") "0")
+(check-expect (get-comp "D=D+M") "D+M")
+(check-expect (get-comp "D=!A") "!A")
+(define (get-comp s)
+  (local ((define exploded (explode s))
+          ; [List-of 1String] -> [List-of 1String]
+          (define (no-jump l1s)
+            (cond
+              [(equal? "=" (first l1s)) (rest l1s)]
+              [else
+               (no-jump (rest l1s))]))
+          ; [List-of 1String] -> [List-of 1String]
+          (define (for-jump l1s)
+            (cond
+              [(equal? ";" (first l1s)) '()]
+              [else
+               (cons (first l1s) (for-jump (rest l1s)))])))
+    (cond
+      [(member? "=" exploded)
+       (implode (no-jump exploded))]
+      [(member? ";" exploded)
+       (implode (for-jump exploded))]
+      [else s])))
+; String -> Jump
+; get the jump field from a string reprent a
+; C-instruction.
+(check-expect (get-jump "0") "")
+(check-expect (get-jump "0;JMP") "JMP")
+(define (get-jump s)
+  (local ((define exploded (explode s))
+          ; [List-of 1String] -> [List-of 1String]
+          (define (get-symbol l1s)
+            (cond
+              [(equal? ";" (first l1s)) (rest l1s)]
+              [else (get-symbol (rest l1s))])))
+    (if (member? ";" exploded)
+        (implode (get-symbol exploded)) "")))
+;====================================================;
+; [List-of String] -> [List-of Instruction]
+; parse ls into list of instruction.
+(check-expect (parser given) expected)
+(define (parser ls)
+  (map str->inst (remove-comment/white ls)))
+;====================================================;

@@ -1,0 +1,36 @@
+[List-of String] -> [List-of Instruction]
+; parse ls into instructions.
+(define (input->instruction ls) ...)
+
+; [List-of Instruction] -> [List-of Field]
+; parse instructions into fields
+(define (instruction->field li) ...)
+
+; [List-of Field] -> [List-of Binary]
+; parse fields into binaries.
+(deifine (field->binary field) ...)
+ 
+
+[List-of String] -> [List-of String]
+; translate A-instruction into Hack machine language representation.
+(define (translate-a ls) ...)
+
+[List-of String] -> [List-of String]
+; translate C-instruction into Hack machine language representation.
+(define (translate-c ls) ...)
+
+; Any -> Boolean
+; is x an A-instruction?
+(define (a-instruction? x) ...)
+
+; Any -> Boolean
+; is x an C-instruction?
+(define (c-instruction? x) ...)
+
+; Any -> Boolean
+; is x Comment/White?
+(define (comment/white? x) ...)
+
+; Number -> Binary
+; translate the given number into its 16-bit binary notation.
+(define (decimal->binary16 n) ...)

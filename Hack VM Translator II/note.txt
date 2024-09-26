@@ -1,0 +1,33 @@
+implement
+  - branching commands
+      - label
+          - labels the current location in the function's code
+      - goto
+          - effects an unconditional goto operation, causing execution
+            to continue from the location marked by the label
+      - if-goto
+          - the stack's topmost value is popped; if the value is not
+            zero, execution continues from the location marked by the
+            label; otherwise, execution continues from the next command
+            in the program
+  - function commands
+      - function
+          - initializes the local variables of the callee
+          - generates an entry label in assembly
+      - call
+          - save the frame of the caller on the stack and jumps to
+            execute the callee
+          - generates an assembly goto instruction
+          - create a return address label and pushes it onto the stack
+          - inject label into generated code
+      - return
+          - copies the return value to the top of the caller's working
+            stack, reinstates the segment pointers of the caller, and
+            jumps to execute the latter from the return address onward
+          - pops the return address off the stack and generates a goto
+            instruction
+  - generate assembly code that sets SP to 256
+  - handle multiple .vm files
+
+learn
+  - text proccessing multiple files

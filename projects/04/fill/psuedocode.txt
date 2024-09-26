@@ -1,0 +1,21 @@
+// set the screen to black when some key is pressed
+// else set the screen to white
+
+(CHECK-KBD)
+   // count = 8192
+   // current_address = SCREEN
+   // if (KBD == 0) goto WHITE
+   (BLACK)
+      // if (count == 0) goto CHECK-KBD
+      // row[current_address] = -1
+      // current_address = row[current_address] + 1
+      // count = count - 1
+      // goto BLACK
+   // goto CHECK-KBD
+   (WHITE)
+      // if (count == 0) goto CHECK-KBD
+      // row[current_address] = -1
+      // current_address = row[current_address] + 1
+      // count = count - 1
+      // goto WHITE
+   // goto CHECK-KBD

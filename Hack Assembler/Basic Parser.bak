@@ -1,0 +1,24 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname |Basic Parser|) (read-case-sensitive #t) (teachpacks ((lib "batch-io.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "batch-io.rkt" "teachpack" "2htdp")) #f)))
+; Instruction is one of:
+; - A-instruction
+; - C-instruction
+; - Number (Integer)
+
+; A-instruction is (List "@" Number)
+
+; C-instruction is (list Dest Comp Jump)
+
+;====================================================;
+(define (a-instruction? x)
+  (and (= 2 (length x))
+       (string=? "@" (first x))
+       (number? (second x))))
+
+(define (c-instruction? x)
+  (and (= 3 (length x))
+       (dest? (first x))
+       (comp? (second x))
+       (jump? (third x))))
+;====================================================;

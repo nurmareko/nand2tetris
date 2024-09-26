@@ -1,0 +1,28 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname parse-c) (read-case-sensitive #t) (teachpacks ((lib "batch-io.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "batch-io.rkt" "teachpack" "2htdp")) #f)))
+(define-struct C [destination compute jump])
+
+; String -> C-instruction
+; parse string into C-instruction
+
+(check-expect (parse-c "ADM=0") (make-C "ADM" "0" ""))
+(check-expect (parse-c "M=M+D") (make-C "M" "M+D" ""))
+(check-expect (parse-c "0;JMP") (make-C "" "0" "JMP"))
+(check-expect (parse-c "ADM=M+D;JMP") (make-C "ADM" "M+D" "JMP"))
+
+(define (parse-c str)
+  (local ((define exploded (explode str)))
+    (make-C (get-dest exploded)
+            (get-comp exploded)
+            (get-jump exploded))))
+
+; [List-of 1String] -> String
+; get the destination field.
+
+(check-expect (get-dest (explode "ADM=0")) "ADM")
+(check-expect (get-dest (explode"M=M+D")) "M")
+(check-expect (get-dest (explode"0;JMP")) "")
+(check-expect (get-dest (explode"ADM=M+D;JMP")) "ADM")
+
+(defien (get-dest l) ...)

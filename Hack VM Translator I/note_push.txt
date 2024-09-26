@@ -1,0 +1,220 @@
+// push argument 5
+// RAM[SP++] = RAM[ARG+5]
+
+// get the value at RAM[ARG+5]
+@5
+D=A
+@ARG
+A=M+D
+D=M
+// push RAM[ARG+5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+=======================================================================
+// push local 5
+// RAM[SP++] = RAM[lcl+5]
+
+// get the value at RAM[lcl+5]
+@5
+D=A
+@LCL
+A=M+D
+D=M
+// push RAM[lcl+5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push static 5
+// RAM[SP++] = RAM[Test.5]
+
+// get the value at RAM[Test.5]
+@Test.5
+D=M
+// push RAM[Test.5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push constant 5
+// RAM[SP++] = 5
+
+// get the constant 5
+@5
+D=A
+// push 5 into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push this 5
+// RAM[SP++] = RAM[THIS+5]
+
+// get the value at RAM[THIS+5]
+@5
+D=A
+@THIS
+A=M+D
+D=M
+// push RAM[THIS+5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push that 5
+// RAM[SP++] = RAM[THAT+5]
+
+// get the value at RAM[THAT+5]
+@5
+D=A
+@THAT
+A=M+D
+D=M
+// push RAM[THAT+5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push pointer 0
+// RAM[SP++] = RAM[THIS]
+// get the value at RAM[THIS]
+@THIS
+A=M
+D=M
+// push RAM[THIS] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push pointer 1
+// RAM[SP++] = RAM[THAT]
+// get the value at RAM[THAT]
+@THAT
+A=M
+D=M
+// push RAM[THAT] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+=======================================================================
+// push temp 0
+// RAM[SP++] = RAM[5]
+@5
+D=M
+// push RAM[5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 1
+// RAM[SP++] = RAM[6]
+@6
+D=M
+// push RAM[6] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 2
+// RAM[SP++] = RAM[7]
+@7
+D=M
+// push RAM[7] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 3
+// RAM[SP++] = RAM[8]
+@8
+D=M
+// push RAM[8] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 4
+// RAM[SP++] = RAM[9]
+@9
+D=M
+// push RAM[9] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 5
+// RAM[SP++] = RAM[10]
+@10
+D=M
+// push RAM[Te10mp5] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 6
+// RAM[SP++] = RAM[11]
+@11
+D=M
+// push RAM[11] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+// push temp 7
+// RAM[SP++] = RAM[12]
+@12
+D=M
+// push RAM[12] into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1

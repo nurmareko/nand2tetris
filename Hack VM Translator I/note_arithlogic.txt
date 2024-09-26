@@ -1,0 +1,271 @@
+// add
+
+// get the value of y, store it at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+
+// get the value of x and perform x+y, store it at dat
+// D = RAM[--SP] + D
+@SP
+A=M-1
+D=M+D
+// upade stack pointer
+@SP
+M=M-1
+
+// push x+y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+========================================================================
+// sub
+
+// get the value of y, store it at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+
+// get the value of x and perform x-y, store it at data register
+// D = RAM[--SP] - D
+@SP
+A=M-1
+D=M-D
+// upade stack pointer
+@SP
+M=M-1
+
+// push x+y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+========================================================================
+// neg
+
+// get the value of y, store -y it at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=-M
+// update stack pointer
+@SP
+M=M-1
+// push -y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+========================================================================
+// eq
+
+// perform x - y, store it at data register
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+// get the value of x and perform x-y, store it at data register
+// D = RAM[--SP] - D
+@SP
+A=M-1
+D=M-D
+// upade stack pointer
+@SP
+M=M-1
+// if (x-y == 0) goto (TRUE)
+@TRUE
+D;JEQ
+// else, push 0 into the stack
+D=0
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+@DONE
+0;JMP
+(TRUE)
+// push -1 into the stack
+D=-1
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+(DONE)
+========================================================================
+// gt
+
+// perform x - y, store it at data register
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+// get the value of x and perform x-y, store it at data register
+// D = RAM[--SP] - D
+@SP
+A=M-1
+D=M-D
+// upade stack pointer
+@SP
+M=M-1
+// if (x-y > 0) goto (TRUE)
+@TRUE
+D;JGT
+// else, push 0 into the stack
+D=0
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+@DONE
+0;JMP
+(TRUE)
+// push -1 into the stack
+D=-1
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+(DONE)
+========================================================================
+// lt
+
+// perform x - y, store it at data register
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+// get the value of x and perform x-y, store it at data register
+// D = RAM[--SP] - D
+@SP
+A=M-1
+D=M-D
+// upade stack pointer
+@SP
+M=M-1
+// if (x-y < 0) goto (TRUE)
+@TRUE
+D;JLT
+// else, push 0 into the stack
+D=0
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+@DONE
+0;JMP
+(TRUE)
+// push -1 into the stack
+D=-1
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+(DONE)
+========================================================================
+// and
+
+// get the value of y, store it at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+
+// get the value of x and perform x&y, store it at data register
+// D = RAM[--SP] & D
+@SP
+A=M-1
+D=M&D
+// update stack pointer
+@SP
+M=M-1
+
+// push x+y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+
+========================================================================
+// or
+
+// get the value of y, store it at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=M
+// upade stack pointer
+@SP
+M=M-1
+
+// get the value of x and perform x|y, store it at data register
+// D = RAM[--SP] | D
+@SP
+A=M-1
+D=M|D
+// upade stack pointer
+@SP
+M=M-1
+
+// push x+y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1
+========================================================================
+// not
+
+// get the value of y, store !y at data register
+// D = RAM[--SP]
+@SP
+A=M-1
+D=!M
+// update stack pointer
+@SP
+M=M-1
+// push !y into stack
+@SP
+A=M
+M=D
+// update stack pointer
+@SP
+M=M+1

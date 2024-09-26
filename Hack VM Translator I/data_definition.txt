@@ -1,0 +1,19 @@
+stack
+
+push pop command
+command: push, pop
+syntax: command segment index
+
+arithmetic-logical command
+command: add x y
+	 sub x y
+	 neg   y
+	 eq  x y
+	 gt  x y
+	 lt  x y
+	 and x y
+	 or  x y
+	 not   y
+syntax: command 
+have implicit operands x and y drawn from stack
+

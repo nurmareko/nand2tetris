@@ -1,0 +1,17 @@
+// label label
+  (label)
+
+// goto label
+  @label
+  0;JMP
+
+// if-goto label
+  // pop stack's topmost value into D register
+  @SP
+  A=M-1
+  D=M
+  @SP
+  M=M-1
+  // jump to label if D is not zero
+  @label
+  D;JNE

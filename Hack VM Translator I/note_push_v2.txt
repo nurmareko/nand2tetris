@@ -1,0 +1,101 @@
+// push argument x
+  // get value stored at argument x
+  @ARG
+  D=M
+  @x
+  D=D+A
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+
+// push local x
+  // get value stored at argument x
+  @LCL
+  D=M
+  @x
+  D=D+A
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+
+// push this x
+  // get value stored at argument x
+  @THIS
+  D=M
+  @x
+  D=D+A
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+
+// push that x
+  // get value stored at argument x
+  @THAT
+  D=M
+  @x
+  D=D+A
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+=======================================================================
+// push pointer 0
+  // get value stored at pointer 0
+  @THIS
+  D=M
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+
+// push pointer 1
+  // get value stored at pointer 0
+  @THAT
+  D=M
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+=======================================================================
+// push temp x
+  // get value stored at temp+x
+  @TEMP+X
+  D=M
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+=======================================================================
+// push constant x
+  // get constant value x
+  @x
+  D=M
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+=======================================================================
+// push static x
+  // get value stored at FILENAME.x
+  @FILENAME.x
+  D=M
+  // push value into stack
+  @SP
+  M=M+1
+  A=M-1
+  M=D
+
+
+
+
